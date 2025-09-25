@@ -19,18 +19,33 @@ public class Board
                 if (x <= 5 && y <= 5)
                 {
                     square.ColorState = ColorState.RED;
-
+                    if (x >= 2 && x <= 3 && y >= 2 && x <= 3)
+                    {
+                        square.IsHome = true;
+                    }
                 }
                 else if (x <= 5 && y >= 9)
                 {
                     square.ColorState = ColorState.GREEN;
+                    if (x >= 2 && x <= 3 && y >= 11 && y <= 12)
+                    {
+                        square.IsHome = true;
+                    }
                 }
                 else if (x >= 9 && y <= 5)
                 {
                     square.ColorState = ColorState.BLUE;
+                    if (x >= 12 && x <= 13 && y >= 2 && y <= 3)
+                    {
+                        square.IsHome = true;
+                    }
                 }
                 else if (x >= 9 && y >= 9)
                 {
+                    if (x >= 12 && x <= 13 && y >= 11 && y <= 12)
+                    {
+                        square.IsHome = true;
+                    }
                     square.ColorState = ColorState.YELLOW;
                 }
                 else
@@ -65,29 +80,35 @@ public class Board
                     }
                 }
                 //Safe Zone
+                //Start
                 if (x == 13 && y == 6)
                 {
                     square.ColorState = ColorState.BLUE;
+                    square.IsStart = true;
                     square.IsSafeZone = true;
                 }
                 if (x == 6 && y == 1)
                 {
                     square.ColorState = ColorState.RED;
+                    square.IsStart = true;
                     square.IsSafeZone = true;
                 }
                 if (x == 1 && y == 8)
                 {
                     square.ColorState = ColorState.GREEN;
+                    square.IsStart = true;
                     square.IsSafeZone = true;
                 }
                 if (x == 8 && y == 13)
                 {
                     square.ColorState = ColorState.YELLOW;
+                    square.IsStart = true;
                     square.IsSafeZone = true;
                 }
                 if (x >= 1 && x <= 5 && y == 7)
                 {
                     square.ColorState = ColorState.GREEN;
+                    square.IsStart = true;
                     square.IsSafeZone = true;
                 }
                 if (x >= 9 && x <= 13 && y == 7)
@@ -101,6 +122,27 @@ public class Board
                 if (x == 7 && y >= 9 && y <= 13)
                 {
                     square.ColorState = ColorState.YELLOW;
+                }
+
+                // Safe Zone *
+                if (x == 8 && y == 2)
+                {
+                    square.IsSafeZone = true;
+                }
+
+                if (x == 2 && y == 6)
+                {
+                    square.IsSafeZone = true;
+                }
+
+                if (x == 6 && y == 12)
+                {
+                    square.IsSafeZone = true;
+                }
+
+                if (x == 12 && y == 8)
+                {
+                    square.IsSafeZone = true;
                 }
 
                 // Arrow Entry
@@ -193,9 +235,18 @@ public class Board
                 }
                 else if (Grid[x, y].ColorState == ColorState.WHITE)
                 {
-                    Console.BackgroundColor = ConsoleColor.White;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write(" 0 ");
+                    if (Grid[x, y].IsSafeZone)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(" * ");
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(" 0 ");
+                    }
                 }
                 else
                 {
@@ -203,28 +254,6 @@ public class Board
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.Write(" 0 ");
                 }
-
-                // if (Grid[x, y].ColorState == ColorState.YELLOW && Grid[x, y].IsArrowEntry)
-                // {
-                //     Console.ForegroundColor = ConsoleColor.Yellow;
-                //     Console.Write(" < ");
-                // }
-                // if (Grid[x, y].ColorState == ColorState.RED && Grid[x, y].IsArrowEntry)
-                // {
-                //     Console.ForegroundColor = ConsoleColor.Yellow;
-                //     Console.Write(" > ");
-                // }
-                // if (Grid[x, y].ColorState == ColorState.GREEN && Grid[x, y].IsArrowEntry)
-                // {
-                //     Console.ForegroundColor = ConsoleColor.Green;
-                //     Console.Write(" v ");
-                // }
-                // if (Grid[x, y].ColorState == ColorState.BLUE && Grid[x, y].IsArrowEntry)
-                // {
-                //     Console.ForegroundColor = ConsoleColor.Blue;
-                //     Console.Write(" ^ ");
-                // }
-
             }
             Console.Write('\n');
         }

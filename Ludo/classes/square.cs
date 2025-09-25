@@ -10,6 +10,8 @@ public class Square
     public bool IsSafeZone { get; set; } = false;
     public bool IsFinish { get; set; } = false;
     public bool IsArrowEntry { get; set; } = false;
+    public bool IsStart { get; set; } = false;
+    public bool IsHome { get; set; } = false;
     public Square(Position position)
     {
         Position = position;
