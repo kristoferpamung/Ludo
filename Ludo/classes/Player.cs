@@ -1,12 +1,13 @@
 using LudoGameEnums;
+using LudoGameInterfaces;
 
 namespace LudoGameClasses;
 
-public class Player
+public class Player : IPlayer
 {
     public string Name { get; private set; }
     public ColorState ColorState { get; private set; }
-    public List<Piece>? PlayerPieces { get; set; }
+    public List<IPiece>? PlayerPieces { get; set; }
     public Player(string name, ColorState colorState)
     {
         Name = name;

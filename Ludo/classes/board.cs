@@ -1,9 +1,11 @@
-using System.IO.Compression;
-using LudoGameEnums;
+
+
+using LudoGameInterfaces;
 
 namespace LudoGameClasses;
 
-public class Board
+public class Board : IBoard
 {
-    public Square[,] Grid { get; set; } = new Square[15, 15];
+    public ISquare[,] Grid { get; set; } = new ISquare[15, 15];
+
 }

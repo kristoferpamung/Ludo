@@ -193,6 +193,10 @@ public class GameController
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write(" > ");
                     }
+                    else if (board.Grid[x, y].Pieces.Count > 0)
+                    {
+                        Console.Write(" P ");
+                    }
                     else
                     {
                         Console.BackgroundColor = ConsoleColor.Red;
@@ -207,6 +211,10 @@ public class GameController
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write(" ^ ");
                     }
+                    else if (board.Grid[x, y].Pieces.Count > 0)
+                    {
+                        Console.Write(" P ");
+                    }
                     else
                     {
                         Console.BackgroundColor = ConsoleColor.Blue;
@@ -220,6 +228,10 @@ public class GameController
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write(" v ");
+                    }
+                    else if (board.Grid[x, y].Pieces.Count > 0)
+                    {
+                        Console.Write(" P ");
                     }
                     else
                     {
@@ -236,6 +248,10 @@ public class GameController
                         Console.BackgroundColor = ConsoleColor.White;
                         Console.Write(" < ");
                     }
+                    else if (board.Grid[x, y].Pieces.Count > 0)
+                    {
+                        Console.Write(" P ");
+                    }
                     else
                     {
                         Console.BackgroundColor = ConsoleColor.Yellow;
@@ -251,6 +267,10 @@ public class GameController
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Write(" * ");
                     }
+                    else if (board.Grid[x, y].Pieces.Count > 0)
+                    {
+                        Console.Write(" P ");
+                    }
                     else
                     {
                         Console.BackgroundColor = ConsoleColor.White;
@@ -263,14 +283,6 @@ public class GameController
                     Console.BackgroundColor = ConsoleColor.DarkGray;
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.Write(" 0 ");
-                }
-
-                foreach (Piece piece in board.Grid[x, y].Pieces)
-                {
-                    if (piece.Position.X == x && piece.Position.Y == y)
-                    {
-                        Console.Write(" P ");
-                    }
                 }
             }
             Console.Write('\n');
