@@ -12,6 +12,7 @@ public class Square
     public bool IsArrowEntry { get; set; } = false;
     public bool IsStart { get; set; } = false;
     public bool IsHome { get; set; } = false;
+    public List<Piece> Pieces { get; set; } = [];
     public Square(Position position)
     {
         Position = position;
