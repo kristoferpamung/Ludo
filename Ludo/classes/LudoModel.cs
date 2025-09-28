@@ -1,15 +1,16 @@
 using LudoGameEnums;
+using LudoGameInterfaces;
 
 namespace LudoGameClasses;
 
 public class LudoModel
 {
-    public List<Player> players;
-    public Board board;
+    public List<IPlayer> players;
+    public IBoard board;
     public Dice dice;
     public Player? currentTurn;
     public GameController gameController;
-    public LudoModel(List<Player> players, Board board, Dice dice, GameController gameController)
+    public LudoModel(List<IPlayer> players, IBoard board, Dice dice, GameController gameController)
     {
         this.players = players;
         this.board = board;
@@ -17,6 +18,6 @@ public class LudoModel
         this.gameController = gameController;
 
         // Setup board
-        this.gameController.SetupBoard(board, players);
+        this.gameController.SetupBoard(board);
     }
 }

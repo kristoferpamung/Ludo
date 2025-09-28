@@ -3,7 +3,7 @@ using LudoGameInterfaces;
 
 namespace LudoGameClasses;
 
-public class Piece : IPiece
+public struct Piece : IPiece
 {
     public ColorState ColorState { get; set; }
     public IPosition Position { get; set; }

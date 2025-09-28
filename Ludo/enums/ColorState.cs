@@ -6,6 +6,5 @@ public enum ColorState
     BLUE,
     GREEN,
     YELLOW,
-    WHITE,
-    GREY
+    NONE
 }
