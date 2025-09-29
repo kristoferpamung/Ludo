@@ -252,6 +252,7 @@ public class Player : IPlayer
                 new Position(12,6),
                 new Position(11,6),
                 new Position(10,6),
+                new Position(9,6),
                 new Position(8,5),
                 new Position(8,4),
                 new Position(8,3),

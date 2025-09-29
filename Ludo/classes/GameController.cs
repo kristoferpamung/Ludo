@@ -495,7 +495,7 @@ public class GameController
             }
         }
     }
-    public void MovePlayerPiece(IBoard board, IPlayer player, IPosition position, int numberOfPiece)
+    public void MovePlayerPiece(IBoard board, IPlayer player, int step, int numberOfPiece)
     {
         for (int y = 0; y <= 14; y++)
         {
@@ -510,6 +510,17 @@ public class GameController
 
             }
         }
-        player.PlayerPieces[numberOfPiece].Position = position;
+
+        int indexOfPiecePosition = player.PlayerPathPositions.FindIndex(position =>
+                position.X == player.PlayerPieces[numberOfPiece].Position.X &&
+                position.Y == player.PlayerPieces[numberOfPiece].Position.Y);
+        if (indexOfPiecePosition != -1)
+        {
+            player.PlayerPieces[numberOfPiece].Position = player.PlayerPathPositions[indexOfPiecePosition + step];
+        }
+        else
+        {
+            player.PlayerPieces[numberOfPiece].Position = player.PlayerPathPositions[0];
+        }
     }
 }
