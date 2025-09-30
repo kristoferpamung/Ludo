@@ -357,7 +357,7 @@ public class GameController
             }
         }
     }
-    public void DisplayBoard(IBoard board)
+    public void DisplayBoard(IBoard board, List<IPlayer> players)
     {
         for (int y = 0; y <= 14; y++)
         {
@@ -374,13 +374,33 @@ public class GameController
                     }
                     else if (board.Grid[y, x].Pieces.Count > 0)
                     {
-                        Console.Write(" P ");
+                        foreach (IPiece piece in board.Grid[y, x].Pieces)
+                        {
+                            int indexOfPlayerPiece = players[0].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
+                            if (indexOfPlayerPiece == 0)
+                            {
+                                Console.Write(" \u2460 ");
+                            }
+                            else if (indexOfPlayerPiece == 1)
+                            {
+                                Console.Write(" \u2461 ");
+                            }
+                            else if (indexOfPlayerPiece == 2)
+                            {
+                                Console.Write(" \u2462 ");
+                            }
+                            else
+                            {
+                                Console.Write(" \u2463 ");
+                            }
+                            
+                        }
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.Red;
-                        Console.Write(" R ");
+                        Console.Write($" {players[0].Name[0]} ");
                         Console.ResetColor();
                     }
                 }
@@ -395,14 +415,43 @@ public class GameController
                     }
                     else if (board.Grid[y, x].Pieces.Count > 0)
                     {
-                        Console.Write(" P ");
+                        foreach (IPiece piece in board.Grid[y, x].Pieces)
+                        {
+                            int indexOfPlayerPiece = players[3].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
+                            if (indexOfPlayerPiece == 0)
+                            {
+                                Console.Write(" \u2460 ");
+                            }
+                            else if (indexOfPlayerPiece == 1)
+                            {
+                                Console.Write(" \u2461 ");
+                            }
+                            else if (indexOfPlayerPiece == 2)
+                            {
+                                Console.Write(" \u2462 ");
+                            }
+                            else
+                            {
+                                Console.Write(" \u2463 ");
+                            }
+                            
+                        }
                     }
                     else
                     {
+
                         Console.BackgroundColor = ConsoleColor.Blue;
                         Console.ForegroundColor = ConsoleColor.Black;
-                        Console.Write(" B ");
+                        if (players.Count > 3)
+                        {
+                            Console.Write($" {players[3].Name[0]} ");
+                        }
+                        else
+                        {
+                            Console.Write(" / ");
+                        }
                         Console.ResetColor();
+
                     }
                 }
                 else if (board.Grid[y, x].ColorState == ColorState.GREEN)
@@ -416,13 +465,33 @@ public class GameController
                     }
                     else if (board.Grid[y, x].Pieces.Count > 0)
                     {
-                        Console.Write(" P ");
+                        foreach (IPiece piece in board.Grid[y, x].Pieces)
+                        {
+                            int indexOfPlayerPiece = players[1].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
+                            if (indexOfPlayerPiece == 0)
+                            {
+                                Console.Write(" \u2460 ");
+                            }
+                            else if (indexOfPlayerPiece == 1)
+                            {
+                                Console.Write(" \u2461 ");
+                            }
+                            else if (indexOfPlayerPiece == 2)
+                            {
+                                Console.Write(" \u2462 ");
+                            }
+                            else
+                            {
+                                Console.Write(" \u2463 ");
+                            }
+                            
+                        }
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.Green;
-                        Console.Write(" G ");
+                        Console.Write($" {players[1].Name[0]} ");
                         Console.ResetColor();
                     }
                 }
@@ -438,15 +507,43 @@ public class GameController
                     }
                     else if (board.Grid[y, x].Pieces.Count > 0)
                     {
-                        Console.Write(" P ");
+                        foreach (IPiece piece in board.Grid[y, x].Pieces)
+                        {
+                            int indexOfPlayerPiece = players[2].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
+                            if (indexOfPlayerPiece == 0)
+                            {
+                                Console.Write(" \u2460 ");
+                            }
+                            else if (indexOfPlayerPiece == 1)
+                            {
+                                Console.Write(" \u2461 ");
+                            }
+                            else if (indexOfPlayerPiece == 2)
+                            {
+                                Console.Write(" \u2462 ");
+                            }
+                            else
+                            {
+                                Console.Write(" \u2463 ");
+                            }
+                            
+                        }
                     }
                     else
                     {
+
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.Yellow;
-                        Console.Write(" Y ");
-                        Console.ResetColor();
+                        if (players.Count > 2)
+                        {
+                            Console.Write($" {players[2].Name[0]} ");
+                        }
+                        else
+                        {
+                            Console.Write(" / ");
+                        }
 
+                        Console.ResetColor();
                     }
                 }
                 else
@@ -531,6 +628,28 @@ public class GameController
         int[] numbers = [0, 1, 2, 3, 4, 5, 5];
         int result = numbers[m.Next(numbers.Length)];
         dice.DiceValue = (DiceValue)result;
+    }
+
+    public IPlayer FirstTurn(List<IPlayer> players)
+    {
+        Console.WriteLine("Draw for the first turn...");
+        List<int> playerFirstTurns = [];
+        ConsoleColor[] color = [ConsoleColor.Red, ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Blue];
+        Random random = new();
+        foreach (IPlayer player in players)
+        {
+            Console.ForegroundColor = color[(int)player.ColorState];
+            Console.Write($"Turn {player.Name}:\npress enter for Roll Dice");
+            Console.ReadLine();
+            int result = random.Next(1, 6);
+            Console.WriteLine(result);
+            Console.ResetColor();
+            playerFirstTurns.Add(result);
+        }
+        int maxIndex = playerFirstTurns.IndexOf(playerFirstTurns.Max());
+
+        return players[maxIndex];
+
     }
     public List<IPiece> CheckPlayablePieces(IPlayer player, DiceValue diceValue)
     {

@@ -1,41 +1,70 @@
-﻿using LudoGameClasses;
+﻿/* TITLE GAME */
+
+using LudoGameClasses;
 using LudoGameEnums;
 using LudoGameInterfaces;
 
-Player player1 = new("windah", ColorState.RED);
-Player player2 = new("zeta", ColorState.GREEN);
-Player player3 = new("kobo", ColorState.YELLOW);
-Player player4 = new("windah", ColorState.BLUE);
+string titleGame = @"    -----------------||   LUDO GAME   ||-----------------      ";
+Console.BackgroundColor = ConsoleColor.Blue;
+Console.WriteLine(titleGame);
+Console.ResetColor();
 
-List<IPlayer> players = [player1, player2, player3, player4];
+Console.WriteLine("Main Menu : ");
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("1. Start Game");
+Console.ForegroundColor = ConsoleColor.Red;
+Console.WriteLine("2. Exit");
+Console.ResetColor();
+Console.Write("Enter your choice (1 or 2): ");
+string? userInputString = Console.ReadLine();
 
-Board board = new();
-Dice dice = new();
-GameController gc = new();
-
-LudoModel lm = new(players, board, dice, gc);
-
-List<IPiece> playablePieces = lm.gameController.CheckPlayablePieces(lm.players[1], DiceValue.LIMA);
-foreach (IPiece piece in playablePieces)
+/* Players */
+List<IPlayer> players = [];
+if (int.TryParse(userInputString, out int userInput))
 {
-    Console.WriteLine(piece.ColorState);
+    if (userInput == 1)
+    {
+        Console.Write("Enter the number of players (2-4): ");
+        string? numberOfPlayerString = Console.ReadLine();
+        if (int.TryParse(numberOfPlayerString, out int numberOfPlayer))
+        {
+            if (numberOfPlayer > 1 && numberOfPlayer < 5)
+            {
+                for (int i = 0; i < numberOfPlayer; i++)
+                {
+                    Console.Write($"Enter Player {i + 1}'s name: ");
+                    string? name = Console.ReadLine();
+                    if (name != null)
+                    {
+                        Player player = new(name, (ColorState)i);
+                        players.Add(player);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Only enter 2 to 4");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Input not valid!");
+        }
+    }
+    else if (userInput == 2)
+    {
+        Console.WriteLine("Bye-bye...");
+        return;
+    }
+    else
+    {
+        Console.WriteLine("Only enter 1 or 2");
+    }
+}
+else
+{
+    Console.WriteLine("Input not valid!");
 }
 
-// lm.gameController.OnPlayerPieceMove(lm.board, players);
-// lm.gameController.DisplayBoard(lm.board);
-// Console.WriteLine();
-// lm.gameController.MovePlayerPiece(lm.board, lm.players[1], 1, 2);
-// lm.gameController.OnPlayerPieceMove(lm.board, players);
-// lm.gameController.DisplayBoard(lm.board);
-// Console.WriteLine();
-// lm.gameController.MovePlayerPiece(lm.board, lm.players[0], 1, 1);
-// lm.gameController.OnPlayerPieceMove(lm.board, players);
-// lm.gameController.DisplayBoard(lm.board);
-// Console.WriteLine();
-// lm.gameController.MovePlayerPiece(lm.board, lm.players[2], 1, 3);
-// lm.gameController.OnPlayerPieceMove(lm.board, players);
-// lm.gameController.DisplayBoard(lm.board);
-// Console.WriteLine();
-// lm.gameController.MovePlayerPiece(lm.board, lm.players[3], 2, 0);
-// lm.gameController.OnPlayerPieceMove(lm.board, players);
-// lm.gameController.DisplayBoard(lm.board);
+LudoModel game = new(players, new Board(), new Dice(), new GameController());
+game.Start();
