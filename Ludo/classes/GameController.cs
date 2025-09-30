@@ -393,7 +393,7 @@ public class GameController
                             {
                                 Console.Write(" \u2463 ");
                             }
-                            
+
                         }
                     }
                     else
@@ -434,7 +434,7 @@ public class GameController
                             {
                                 Console.Write(" \u2463 ");
                             }
-                            
+
                         }
                     }
                     else
@@ -484,7 +484,7 @@ public class GameController
                             {
                                 Console.Write(" \u2463 ");
                             }
-                            
+
                         }
                     }
                     else
@@ -526,7 +526,7 @@ public class GameController
                             {
                                 Console.Write(" \u2463 ");
                             }
-                            
+
                         }
                     }
                     else
@@ -646,9 +646,7 @@ public class GameController
             playerFirstTurns.Add(result);
         }
         int maxIndex = playerFirstTurns.IndexOf(playerFirstTurns.Max());
-
         return players[maxIndex];
-
     }
     public List<bool> CheckPlayablePieces(IPlayer player, DiceValue diceValue)
     {
@@ -689,6 +687,36 @@ public class GameController
 
             return piecesOnBoard;
         }
-        
+
+    }
+    public IPlayer NextTurn(IPlayer lastPlayerTurn, List<IPlayer> players)
+    {
+        int lastPlayerTurnIndex = players.FindIndex(player => player.ColorState == lastPlayerTurn.ColorState);
+
+        if (lastPlayerTurnIndex == players.Count - 1)
+        {
+            return players[0];
+        }
+        else
+        {
+            return players[lastPlayerTurnIndex + 1];
+        }
+
+    }
+    public bool IsPlayerWinner(IPlayer player)
+    {
+        List<bool> allPieceInGoal = [];
+
+        foreach (IPiece p in player.PlayerPieces)
+        {
+            allPieceInGoal.Add(p.PieceState == PieceState.IN_GOAL);
+        }
+
+        return allPieceInGoal.All(p => p);
+    }
+    public void SendPieceIntoHome(IPiece piece, IPlayer player)
+    {
+        int indexOfPiece = player.PlayerPieces.FindIndex(p => p.Id == piece.Id);
+        player.PlayerPieces[indexOfPiece].Position = player.PlayerHomePositions[indexOfPiece];
     }
 }

@@ -17,10 +17,10 @@ public class Player : IPlayer
         if (ColorState == ColorState.RED)
         {
             PlayerPieces = [
-                new Piece(ColorState, new Position(2,2)),
-                new Piece(ColorState, new Position(2,3)),
-                new Piece(ColorState, new Position(3,3)),
-                new Piece(ColorState, new Position(3,2))
+                new Piece(ColorState, new Position(2,2), 1),
+                new Piece(ColorState, new Position(2,3), 2),
+                new Piece(ColorState, new Position(3,3), 3),
+                new Piece(ColorState, new Position(3,2), 4)
                 ];
             PlayerHomePositions = [
                 new Position(2,2),
@@ -91,10 +91,10 @@ public class Player : IPlayer
         if (ColorState == ColorState.GREEN)
         {
             PlayerPieces = [
-                new Piece(ColorState, new Position(2,11)),
-                new Piece(ColorState, new Position(2,12)),
-                new Piece(ColorState, new Position(3,12)),
-                new Piece(ColorState, new Position(3,11))
+                new Piece(ColorState, new Position(2,11), 1),
+                new Piece(ColorState, new Position(2,12), 2),
+                new Piece(ColorState, new Position(3,12), 3),
+                new Piece(ColorState, new Position(3,11), 4)
                 ];
             PlayerHomePositions = [
                 new Position(2,11),
@@ -165,10 +165,10 @@ public class Player : IPlayer
         if (ColorState == ColorState.YELLOW)
         {
             PlayerPieces = [
-                new Piece(ColorState, new Position(11,11)),
-                new Piece(ColorState, new Position(11,12)),
-                new Piece(ColorState, new Position(12,12)),
-                new Piece(ColorState, new Position(12,11))
+                new Piece(ColorState, new Position(11,11), 1),
+                new Piece(ColorState, new Position(11,12), 2),
+                new Piece(ColorState, new Position(12,12), 3),
+                new Piece(ColorState, new Position(12,11), 4)
                 ];
             PlayerHomePositions = [
                 new Position(11,11),
@@ -239,10 +239,10 @@ public class Player : IPlayer
         if (ColorState == ColorState.BLUE)
         {
             PlayerPieces = [
-                new Piece(ColorState, new Position(11,2)),
-                new Piece(ColorState, new Position(11,3)),
-                new Piece(ColorState, new Position(12,3)),
-                new Piece(ColorState, new Position(12,2))
+                new Piece(ColorState, new Position(11,2), 1),
+                new Piece(ColorState, new Position(11,3), 2),
+                new Piece(ColorState, new Position(12,3), 3),
+                new Piece(ColorState, new Position(12,2), 4)
                 ];
             PlayerHomePositions = [
                 new Position(11,2),
