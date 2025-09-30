@@ -15,26 +15,27 @@ GameController gc = new();
 
 LudoModel lm = new(players, board, dice, gc);
 
-lm.gameController.OnPlayerPieceMove(lm.board, players);
-lm.gameController.DisplayBoard(lm.board);
-Console.WriteLine();
-lm.gameController.MovePlayerPiece(lm.board, lm.players[1], 3, 2);
-lm.gameController.OnPlayerPieceMove(lm.board, players);
-lm.gameController.DisplayBoard(lm.board);
-Console.WriteLine();
-lm.gameController.MovePlayerPiece(lm.board, lm.players[0], 4, 1);
-lm.gameController.OnPlayerPieceMove(lm.board, players);
-lm.gameController.DisplayBoard(lm.board);
-Console.WriteLine();
-lm.gameController.MovePlayerPiece(lm.board, lm.players[2], 5, 3);
-lm.gameController.OnPlayerPieceMove(lm.board, players);
-lm.gameController.DisplayBoard(lm.board);
-Console.WriteLine();
-lm.gameController.MovePlayerPiece(lm.board, lm.players[3], 1, 0);
-lm.gameController.OnPlayerPieceMove(lm.board, players);
-lm.gameController.DisplayBoard(lm.board);
-Console.WriteLine();
-lm.gameController.MovePlayerPiece(lm.board, lm.players[3], 4, 0);
-lm.gameController.OnPlayerPieceMove(lm.board, players);
-lm.gameController.DisplayBoard(lm.board);
-Console.WriteLine();
+List<IPiece> playablePieces = lm.gameController.CheckPlayablePieces(lm.players[1], DiceValue.LIMA);
+foreach (IPiece piece in playablePieces)
+{
+    Console.WriteLine(piece.ColorState);
+}
+
+// lm.gameController.OnPlayerPieceMove(lm.board, players);
+// lm.gameController.DisplayBoard(lm.board);
+// Console.WriteLine();
+// lm.gameController.MovePlayerPiece(lm.board, lm.players[1], 1, 2);
+// lm.gameController.OnPlayerPieceMove(lm.board, players);
+// lm.gameController.DisplayBoard(lm.board);
+// Console.WriteLine();
+// lm.gameController.MovePlayerPiece(lm.board, lm.players[0], 1, 1);
+// lm.gameController.OnPlayerPieceMove(lm.board, players);
+// lm.gameController.DisplayBoard(lm.board);
+// Console.WriteLine();
+// lm.gameController.MovePlayerPiece(lm.board, lm.players[2], 1, 3);
+// lm.gameController.OnPlayerPieceMove(lm.board, players);
+// lm.gameController.DisplayBoard(lm.board);
+// Console.WriteLine();
+// lm.gameController.MovePlayerPiece(lm.board, lm.players[3], 2, 0);
+// lm.gameController.OnPlayerPieceMove(lm.board, players);
+// lm.gameController.DisplayBoard(lm.board);

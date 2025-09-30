@@ -1,3 +1,4 @@
+using System.Data.Common;
 using LudoGameEnums;
 using LudoGameInterfaces;
 
@@ -502,18 +503,18 @@ public class GameController
             for (int x = 0; x <= 14; x++)
             {
                 board.Grid[y, x].Pieces.RemoveAll(piece =>
-                piece.ColorState == player.PlayerPieces[numberOfPiece].ColorState && 
+                piece.ColorState == player.PlayerPieces[numberOfPiece].ColorState &&
                 piece.Position.X == player.PlayerPieces[numberOfPiece].Position.X &&
                 piece.Position.Y == player.PlayerPieces[numberOfPiece].Position.Y &&
                 piece.PieceState == player.PlayerPieces[numberOfPiece].PieceState
                 );
-
             }
         }
 
         int indexOfPiecePosition = player.PlayerPathPositions.FindIndex(position =>
                 position.X == player.PlayerPieces[numberOfPiece].Position.X &&
                 position.Y == player.PlayerPieces[numberOfPiece].Position.Y);
+
         if (indexOfPiecePosition != -1)
         {
             player.PlayerPieces[numberOfPiece].Position = player.PlayerPathPositions[indexOfPiecePosition + step];
@@ -521,6 +522,55 @@ public class GameController
         else
         {
             player.PlayerPieces[numberOfPiece].Position = player.PlayerPathPositions[0];
+            player.PlayerPieces[numberOfPiece].PieceState = PieceState.ON_BOARD;
+        }
+    }
+    public void RollDice(Dice dice)
+    {
+        Random m = new();
+        int[] numbers = [0, 1, 2, 3, 4, 5, 5];
+        int result = numbers[m.Next(numbers.Length)];
+        dice.DiceValue = (DiceValue)result;
+    }
+    public List<IPiece> CheckPlayablePieces(IPlayer player, DiceValue diceValue)
+    {
+        List<int> currentPosition = [];
+        foreach (IPiece piece in player.PlayerPieces)
+        {
+            int indexOfPiecePosition = player.PlayerPathPositions.FindIndex(position =>
+                position.X == piece.Position.X &&
+                position.Y == piece.Position.Y);
+            if (indexOfPiecePosition >= 1)
+            {
+                currentPosition.Add(indexOfPiecePosition);
+            }
+        }
+
+        List<int> pieceNotNearFinish = currentPosition.FindAll(p => p + (int)diceValue <= player.PlayerPathPositions.Count - 1);
+
+        if (pieceNotNearFinish.Count >= 1)
+        {
+            List<IPiece> pieces = [];
+            if (diceValue == DiceValue.ENAM)
+            {
+                foreach (int i in pieceNotNearFinish)
+                {
+                    pieces.Add(player.PlayerPieces[i]);
+                }
+                return pieces;
+            }
+            else
+            {
+                foreach (int i in pieceNotNearFinish)
+                {
+                    pieces.Add(player.PlayerPieces[i]);
+                }
+                return player.PlayerPieces.FindAll(piece => piece.PieceState == PieceState.ON_BOARD);
+            }
+        }
+        else
+        {
+            return [];
         }
     }
 }
