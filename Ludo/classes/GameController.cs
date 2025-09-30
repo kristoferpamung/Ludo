@@ -650,7 +650,7 @@ public class GameController
         return players[maxIndex];
 
     }
-    public List<IPiece> CheckPlayablePieces(IPlayer player, DiceValue diceValue)
+    public List<bool> CheckPlayablePieces(IPlayer player, DiceValue diceValue)
     {
         /* Check piece index on PlayerPathPosition */
         List<int> currentPosition = [];
@@ -662,31 +662,33 @@ public class GameController
             currentPosition.Add(indexOfPiecePosition);
         }
 
-        List<int> pieceNotNearFinish = currentPosition.FindAll(p => p + (int)diceValue <= player.PlayerPathPositions.Count - 1);
+        /* Check Playable Piece */
+        List<bool> playablePieces = [];
 
-        if (pieceNotNearFinish.Count >= 1)
+        foreach (int index in currentPosition)
         {
-            List<IPiece> pieces = [];
-            if (diceValue == DiceValue.ENAM)
-            {
-                foreach (int i in pieceNotNearFinish)
-                {
-                    pieces.Add(player.PlayerPieces[i]);
-                }
-                return pieces;
-            }
-            else
-            {
-                foreach (int i in pieceNotNearFinish)
-                {
-                    pieces.Add(player.PlayerPieces[i]);
-                }
-                return pieces.FindAll(piece => piece.PieceState == PieceState.ON_BOARD);
-            }
+            playablePieces.Add(index + (int)diceValue + 1 <= player.PlayerPathPositions.Count - 1);
+        }
+
+        if (diceValue == DiceValue.ENAM)
+        {
+            return playablePieces;
         }
         else
         {
-            return [];
+            List<bool> piecesOnBoard = [];
+            foreach (IPiece piece in player.PlayerPieces)
+            {
+                piecesOnBoard.Add(piece.PieceState == PieceState.ON_BOARD);
+            }
+
+            for (int i = 0; i < playablePieces.Count; i++)
+            {
+                piecesOnBoard[i] = playablePieces[i] == true && piecesOnBoard[i] == true;
+            }
+
+            return piecesOnBoard;
         }
+        
     }
 }

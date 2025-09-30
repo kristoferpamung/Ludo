@@ -1,10 +1,9 @@
-﻿/* TITLE GAME */
-
+﻿
 using LudoGameClasses;
 using LudoGameEnums;
 using LudoGameInterfaces;
 
-string titleGame = @"    -----------------||   LUDO GAME   ||-----------------      ";
+string titleGame = "    -----------------||   LUDO GAME   ||-----------------      ";
 Console.BackgroundColor = ConsoleColor.Blue;
 Console.WriteLine(titleGame);
 Console.ResetColor();
