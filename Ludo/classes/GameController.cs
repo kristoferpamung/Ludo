@@ -629,7 +629,6 @@ public class GameController
         int result = numbers[m.Next(numbers.Length)];
         dice.DiceValue = (DiceValue)result;
     }
-
     public IPlayer FirstTurn(List<IPlayer> players)
     {
         Console.WriteLine("Draw for the first turn...");
@@ -653,16 +652,14 @@ public class GameController
     }
     public List<IPiece> CheckPlayablePieces(IPlayer player, DiceValue diceValue)
     {
+        /* Check piece index on PlayerPathPosition */
         List<int> currentPosition = [];
         foreach (IPiece piece in player.PlayerPieces)
         {
             int indexOfPiecePosition = player.PlayerPathPositions.FindIndex(position =>
                 position.X == piece.Position.X &&
                 position.Y == piece.Position.Y);
-            if (indexOfPiecePosition >= 1)
-            {
-                currentPosition.Add(indexOfPiecePosition);
-            }
+            currentPosition.Add(indexOfPiecePosition);
         }
 
         List<int> pieceNotNearFinish = currentPosition.FindAll(p => p + (int)diceValue <= player.PlayerPathPositions.Count - 1);
@@ -684,7 +681,7 @@ public class GameController
                 {
                     pieces.Add(player.PlayerPieces[i]);
                 }
-                return player.PlayerPieces.FindAll(piece => piece.PieceState == PieceState.ON_BOARD);
+                return pieces.FindAll(piece => piece.PieceState == PieceState.ON_BOARD);
             }
         }
         else
