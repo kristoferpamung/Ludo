@@ -8,7 +8,7 @@ public class LudoModel
     public List<IPlayer> players;
     public IBoard board;
     public Dice dice;
-    public IPlayer? currentTurn;
+    public IPlayer? currentPlayerTurn;
     public GameController gameController;
     public LudoModel(List<IPlayer> players, IBoard board, Dice dice, GameController gameController)
     {
@@ -23,19 +23,53 @@ public class LudoModel
 
     public void Start()
     {
+        ConsoleColor[] consoleColors = [ConsoleColor.Red, ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Blue];
         IPlayer firstTurn = gameController.FirstTurn(players);
-        currentTurn = firstTurn;
-        Console.WriteLine("First Turn : " + currentTurn.Name);
-        Thread.Sleep(2000);
+        currentPlayerTurn = firstTurn;
+        Console.Write($"First Turn: ");
+        Console.BackgroundColor = consoleColors[(int)currentPlayerTurn.ColorState];
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write($" {currentPlayerTurn.Name} ");
+        Console.ResetColor();
+        Console.WriteLine();
+        Console.Write("Press [Enter] to continue");
+        Console.ReadLine();
         Console.Clear();
+
         gameController.OnPlayerPieceMove(board, players);
-        while (true)
+        
+        bool isGameOver = false;
+        while (!isGameOver)
         {
+            /* Display Board */
             gameController.DisplayBoard(board, players);
-            Thread.Sleep(1500);
+            Console.WriteLine();
+
+            Console.Write("It's ");
+            Console.ForegroundColor = consoleColors[(int)currentPlayerTurn.ColorState];
+            Console.Write($"{currentPlayerTurn.Name}");
+            Console.ResetColor();
+            Console.Write("'s turn to roll the dice\n");
+            Console.Write("Press [Enter] to roll the dice");
+            Console.ReadLine();
+
+            /* Roll Dice */
+            gameController.RollDice(dice);
+            Console.ForegroundColor = consoleColors[(int)currentPlayerTurn.ColorState];
+            Console.WriteLine(dice.DiceValue);
+            Console.ResetColor();
+
+            /* Playable Player Piece */
+            bool[] playablePiece = gameController.CheckPlayablePieces(currentPlayerTurn, dice.DiceValue);
+            foreach (bool playable in playablePiece)
+            {
+                Console.WriteLine(playable);
+            }
+            
+            Console.ReadLine();
+            Console.ResetColor();
             Console.Clear();
-            gameController.DisplayBoard(board, players);
-            break;
+            currentPlayerTurn = gameController.NextTurn(currentPlayerTurn, players);
         }
     }
 }

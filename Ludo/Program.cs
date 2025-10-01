@@ -84,7 +84,7 @@ Console.ResetColor();
 Console.WriteLine("Setup Players");
 
 List<IPlayer> players = [];
-List<ConsoleColor> consoleColors = [ConsoleColor.Red, ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Blue];
+ConsoleColor[] consoleColors = [ConsoleColor.Red, ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Blue];
 
 for (int i = 0; i < numberOfPlayers; i++)
 {
@@ -126,12 +126,11 @@ for (int i = 0; i < players.Count; i++)
 }
 
 /* Enter for continue */
-Console.Write("\nPress enter to continue....");
+Console.Write("\nPress [Enter] to continue");
 Console.ReadLine();
 Console.Clear();
 
 /* Instantiate Game Model */
-
 LudoModel ludoModel = new(players, new Board(), new Dice(), new GameController());
 ludoModel.Start();
 
@@ -142,21 +141,3 @@ void printInvalidInputMessage(string message)
     Console.WriteLine($" {message} ");
     Console.ResetColor();
 }
-
-// using LudoGameClasses;
-// using LudoGameEnums;
-// using LudoGameInterfaces;
-
-// LudoModel lm = new([new Player("windah", ColorState.RED), new Player("zeta", ColorState.GREEN)], new Board(), new Dice(), new GameController());
-
-// IPlayer currentTurn = lm.gameController.FirstTurn(lm.players);
-// lm.currentTurn = currentTurn;
-
-// while (true)
-// {
-//     Console.WriteLine(lm.currentTurn.Name);
-//     IPlayer nextTurn = lm.gameController.NextTurn(lm.currentTurn, lm.players);
-//     lm.currentTurn = nextTurn;
-//     Console.ReadLine();
-//     Console.WriteLine(lm.currentTurn!.Name);
-// }

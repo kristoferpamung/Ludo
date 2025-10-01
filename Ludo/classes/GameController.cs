@@ -631,24 +631,47 @@ public class GameController
     }
     public IPlayer FirstTurn(List<IPlayer> players)
     {
-        Console.WriteLine("Draw for the first turn...");
+        string titleGame = "    -----------------||   LUDO GAME   ||-----------------      ";
+        Console.BackgroundColor = ConsoleColor.DarkBlue;
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine(titleGame);
+        Console.ResetColor();
+        Console.WriteLine("Drawing for First Turn");
         List<int> playerFirstTurns = [];
         ConsoleColor[] color = [ConsoleColor.Red, ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Blue];
         Random random = new();
         foreach (IPlayer player in players)
         {
-            Console.ForegroundColor = color[(int)player.ColorState];
-            Console.Write($"Turn {player.Name}:\npress enter for Roll Dice");
+            Console.BackgroundColor = color[(int)player.ColorState];
+            Console.Write(" ");
+            Console.ResetColor();
+            Console.Write($" {player.Name}'s Turn\nPress [Enter] to roll the dice");
             Console.ReadLine();
             int result = random.Next(1, 6);
+            Console.ForegroundColor = color[(int)player.ColorState];
             Console.WriteLine(result);
             Console.ResetColor();
+            Console.WriteLine();
             playerFirstTurns.Add(result);
         }
         int maxIndex = playerFirstTurns.IndexOf(playerFirstTurns.Max());
         return players[maxIndex];
     }
-    public List<bool> CheckPlayablePieces(IPlayer player, DiceValue diceValue)
+    public IPlayer NextTurn(IPlayer lastPlayerTurn, List<IPlayer> players)
+    {
+        int lastPlayerTurnIndex = players.FindIndex(player => player.ColorState == lastPlayerTurn.ColorState);
+
+        if (lastPlayerTurnIndex == players.Count - 1)
+        {
+            return players[0];
+        }
+        else
+        {
+            return players[lastPlayerTurnIndex + 1];
+        }
+
+    }
+    public bool[] CheckPlayablePieces(IPlayer player, DiceValue diceValue)
     {
         /* Check piece index on PlayerPathPosition */
         List<int> currentPosition = [];
@@ -670,7 +693,7 @@ public class GameController
 
         if (diceValue == DiceValue.ENAM)
         {
-            return playablePieces;
+            return playablePieces.ToArray();
         }
         else
         {
@@ -685,24 +708,11 @@ public class GameController
                 piecesOnBoard[i] = playablePieces[i] == true && piecesOnBoard[i] == true;
             }
 
-            return piecesOnBoard;
+            return piecesOnBoard.ToArray();
         }
 
     }
-    public IPlayer NextTurn(IPlayer lastPlayerTurn, List<IPlayer> players)
-    {
-        int lastPlayerTurnIndex = players.FindIndex(player => player.ColorState == lastPlayerTurn.ColorState);
 
-        if (lastPlayerTurnIndex == players.Count - 1)
-        {
-            return players[0];
-        }
-        else
-        {
-            return players[lastPlayerTurnIndex + 1];
-        }
-
-    }
     public bool IsPlayerWinner(IPlayer player)
     {
         List<bool> allPieceInGoal = [];
