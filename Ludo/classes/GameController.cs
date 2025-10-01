@@ -561,6 +561,12 @@ public class GameController
                         {
                             Console.Write(" P ");
                         }
+                        else if (board.Grid[y, x].IsSafeZone)
+                        {
+                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.Write(" * ");
+                            Console.ResetColor();
+                        }
                         else
                         {
                             Console.ForegroundColor = ConsoleColor.Black;
@@ -574,7 +580,7 @@ public class GameController
             Console.Write('\n');
         }
     }
-    public void OnPlayerPieceMove(IBoard board, List<IPlayer> players)
+    public void AddPlayerPieceIntoBoard(IBoard board, List<IPlayer> players)
     {
         for (int y = 0; y <= 14; y++)
         {
@@ -603,7 +609,8 @@ public class GameController
                 piece.ColorState == player.PlayerPieces[numberOfPiece].ColorState &&
                 piece.Position.X == player.PlayerPieces[numberOfPiece].Position.X &&
                 piece.Position.Y == player.PlayerPieces[numberOfPiece].Position.Y &&
-                piece.PieceState == player.PlayerPieces[numberOfPiece].PieceState
+                piece.PieceState == player.PlayerPieces[numberOfPiece].PieceState &&
+                piece.Id == player.PlayerPieces[numberOfPiece].Id
                 );
             }
         }
