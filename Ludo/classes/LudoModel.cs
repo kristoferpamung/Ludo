@@ -60,12 +60,29 @@ public class LudoModel
             Console.ResetColor();
 
             /* Playable Player Piece */
-            bool[] playablePiece = gameController.CheckPlayablePieces(currentPlayerTurn, dice.DiceValue);
-            foreach (bool playable in playablePiece)
+            bool[] playablePieceArray = gameController.CheckPlayablePieces(currentPlayerTurn, dice.DiceValue);
+            List<IPiece> playablePiece = [];
+            for (int i = 0; i < playablePieceArray.Length; i++)
             {
-                Console.WriteLine(playable);
+                if (playablePieceArray[i])
+                {
+                    playablePiece.Add(currentPlayerTurn.PlayerPieces[i]);
+                }
             }
-            
+
+            if (playablePiece.Count >= 1)
+            {
+                Console.WriteLine("You can move a piece 😁");
+                foreach (IPiece piece in playablePiece)
+                {
+                    Console.WriteLine($"Piece {piece.Id}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No playable pieces available 😞");
+            }
+            Console.WriteLine("Press [Enter] to continue");
             Console.ReadLine();
             Console.ResetColor();
             Console.Clear();
