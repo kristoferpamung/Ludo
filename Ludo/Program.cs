@@ -133,6 +133,7 @@ Console.Clear();
 /* Instantiate Game Model */
 LudoModel ludoModel = new(players, new Board(), new Dice(), new GameController());
 ludoModel.Start();
+ludoModel.GameOver();
 
 void printInvalidInputMessage(string message)
 {
@@ -141,3 +142,4 @@ void printInvalidInputMessage(string message)
     Console.WriteLine($" {message} ");
     Console.ResetColor();
 }
+

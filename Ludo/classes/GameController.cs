@@ -763,15 +763,56 @@ public class GameController
         int indexOfPiece = player.PlayerPieces.FindIndex(p => p.Id == piece.Id);
         player.PlayerPieces[indexOfPiece].Position = player.PlayerHomePositions[indexOfPiece];
     }
-    public bool CheckCollision(IPiece piece, IBoard board)
+    public bool CheckCollision(IPiece piece, IBoard board, List<IPlayer> players)
     {
-        if (board.Grid[piece.Position.Y, piece.Position.Y].Pieces.Count > 1)
+        if (board.Grid[piece.Position.Y, piece.Position.X].Pieces.Count > 1)
         {
-            if (!board.Grid[piece.Position.Y, piece.Position.Y].IsSafeZone)
+            if (!board.Grid[piece.Position.Y, piece.Position.X].IsSafeZone)
             {
-                
+                List<IPiece> enemyPiece = board.Grid[piece.Position.Y, piece.Position.X].Pieces.FindAll(p => p.ColorState != piece.ColorState);
+                if (enemyPiece.Count > 0)
+                {
+                    IPlayer? player = players.Find(player => player.ColorState == enemyPiece[0].ColorState);
+                    if (player != null)
+                    {
+                        int index = player.PlayerPieces.FindIndex(p => p.Position.X == enemyPiece[0].Position.X && p.Position.Y == enemyPiece[0].Position.Y);
+                        player.PlayerPieces[index].Position = player.PlayerHomePositions[index];
+                        player.PlayerPieces[index].PieceState = PieceState.IN_HOME;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
-        return false;
+        else
+        {
+            return false;
+        }
+
+    }
+    public bool CheckPlayerWinner(IBoard board, IPlayer player)
+    {
+        IPosition playerFinishPosition = player.PlayerPathPositions[56];
+
+        List<IPiece> playerPieces = board.Grid[playerFinishPosition.Y, playerFinishPosition.X].Pieces;
+        if (playerPieces.Count == 4)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
