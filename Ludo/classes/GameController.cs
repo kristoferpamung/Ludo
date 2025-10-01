@@ -1,4 +1,3 @@
-using System.Data.Common;
 using LudoGameEnums;
 using LudoGameInterfaces;
 
@@ -152,6 +151,7 @@ public class GameController
                         if (x == 1)
                         {
                             square.IsStart = true;
+                            square.IsSafeZone = true;
                             square.ColorState = ColorState.RED;
                         }
                     }
@@ -221,6 +221,7 @@ public class GameController
                         if (x == 13)
                         {
                             square.IsStart = true;
+                            square.IsSafeZone = true;
                             square.ColorState = ColorState.YELLOW;
                         }
                     }
@@ -323,6 +324,7 @@ public class GameController
                             if (x == 6)
                             {
                                 square.IsStart = true;
+                                square.IsSafeZone = true;
                             }
                         }
                     }
@@ -359,33 +361,31 @@ public class GameController
     }
     public void DisplayBoard(IBoard board, List<IPlayer> players)
     {
+        ConsoleColor[] consoleColors = [ConsoleColor.Red, ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Blue];
+
         for (int y = 0; y <= 14; y++)
         {
             for (int x = 0; x <= 14; x++)
             {
                 if (board.Grid[y, x].ColorState == ColorState.RED)
                 {
-                    if (board.Grid[y, x].IsArrowEntry)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.Write(" > ");
-                        Console.ResetColor();
-                    }
-                    else if (board.Grid[y, x].Pieces.Count > 0)
+
+                    if (board.Grid[y, x].Pieces.Count > 0)
                     {
                         foreach (IPiece piece in board.Grid[y, x].Pieces)
                         {
-                            int indexOfPlayerPiece = players[0].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
-                            if (indexOfPlayerPiece == 0)
+                            // int indexOfPlayerPiece = players[0].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.BackgroundColor = ConsoleColor.White;
+                            if (piece.Id == 1)
                             {
                                 Console.Write(" \u2460 ");
                             }
-                            else if (indexOfPlayerPiece == 1)
+                            else if (piece.Id == 2)
                             {
                                 Console.Write(" \u2461 ");
                             }
-                            else if (indexOfPlayerPiece == 2)
+                            else if (piece.Id == 3)
                             {
                                 Console.Write(" \u2462 ");
                             }
@@ -393,8 +393,16 @@ public class GameController
                             {
                                 Console.Write(" \u2463 ");
                             }
+                            Console.ResetColor();
 
                         }
+                    }
+                    else if (board.Grid[y, x].IsArrowEntry)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Write(" > ");
+                        Console.ResetColor();
                     }
                     else
                     {
@@ -406,27 +414,23 @@ public class GameController
                 }
                 else if (board.Grid[y, x].ColorState == ColorState.BLUE)
                 {
-                    if (board.Grid[y, x].IsArrowEntry)
-                    {
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write(" ^ ");
-                        Console.ResetColor();
-                    }
-                    else if (board.Grid[y, x].Pieces.Count > 0)
+
+                    if (board.Grid[y, x].Pieces.Count > 0)
                     {
                         foreach (IPiece piece in board.Grid[y, x].Pieces)
                         {
-                            int indexOfPlayerPiece = players[3].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
-                            if (indexOfPlayerPiece == 0)
+                            // int indexOfPlayerPiece = players[3].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
+                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            if (piece.Id == 1)
                             {
                                 Console.Write(" \u2460 ");
                             }
-                            else if (indexOfPlayerPiece == 1)
+                            else if (piece.Id == 2)
                             {
                                 Console.Write(" \u2461 ");
                             }
-                            else if (indexOfPlayerPiece == 2)
+                            else if (piece.Id == 3)
                             {
                                 Console.Write(" \u2462 ");
                             }
@@ -434,8 +438,15 @@ public class GameController
                             {
                                 Console.Write(" \u2463 ");
                             }
-
+                            Console.ResetColor();
                         }
+                    }
+                    else if (board.Grid[y, x].IsArrowEntry)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write(" ^ ");
+                        Console.ResetColor();
                     }
                     else
                     {
@@ -456,27 +467,23 @@ public class GameController
                 }
                 else if (board.Grid[y, x].ColorState == ColorState.GREEN)
                 {
-                    if (board.Grid[y, x].IsArrowEntry)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.Write(" v ");
-                        Console.ResetColor();
-                    }
-                    else if (board.Grid[y, x].Pieces.Count > 0)
+
+                    if (board.Grid[y, x].Pieces.Count > 0)
                     {
                         foreach (IPiece piece in board.Grid[y, x].Pieces)
                         {
-                            int indexOfPlayerPiece = players[1].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
-                            if (indexOfPlayerPiece == 0)
+                            // int indexOfPlayerPiece = players[1].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.BackgroundColor = ConsoleColor.White;
+                            if (piece.Id == 1)
                             {
                                 Console.Write(" \u2460 ");
                             }
-                            else if (indexOfPlayerPiece == 1)
+                            else if (piece.Id == 2)
                             {
                                 Console.Write(" \u2461 ");
                             }
-                            else if (indexOfPlayerPiece == 2)
+                            else if (piece.Id == 3)
                             {
                                 Console.Write(" \u2462 ");
                             }
@@ -484,8 +491,16 @@ public class GameController
                             {
                                 Console.Write(" \u2463 ");
                             }
+                            Console.ResetColor();
 
                         }
+                    }
+                    else if (board.Grid[y, x].IsArrowEntry)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Write(" v ");
+                        Console.ResetColor();
                     }
                     else
                     {
@@ -497,28 +512,23 @@ public class GameController
                 }
                 else if (board.Grid[y, x].ColorState == ColorState.YELLOW)
                 {
-                    if (board.Grid[y, x].IsArrowEntry)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.Write(" < ");
-                        Console.ResetColor();
 
-                    }
-                    else if (board.Grid[y, x].Pieces.Count > 0)
+                    if (board.Grid[y, x].Pieces.Count > 0)
                     {
                         foreach (IPiece piece in board.Grid[y, x].Pieces)
                         {
-                            int indexOfPlayerPiece = players[2].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
-                            if (indexOfPlayerPiece == 0)
+                            // int indexOfPlayerPiece = players[2].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.BackgroundColor = ConsoleColor.White;
+                            if (piece.Id == 1)
                             {
                                 Console.Write(" \u2460 ");
                             }
-                            else if (indexOfPlayerPiece == 1)
+                            else if (piece.Id == 2)
                             {
                                 Console.Write(" \u2461 ");
                             }
-                            else if (indexOfPlayerPiece == 2)
+                            else if (piece.Id == 3)
                             {
                                 Console.Write(" \u2462 ");
                             }
@@ -526,12 +536,20 @@ public class GameController
                             {
                                 Console.Write(" \u2463 ");
                             }
+                            Console.ResetColor();
 
                         }
                     }
+                    else if (board.Grid[y, x].IsArrowEntry)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Write(" < ");
+                        Console.ResetColor();
+
+                    }
                     else
                     {
-
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         if (players.Count > 2)
@@ -559,7 +577,30 @@ public class GameController
                     {
                         if (board.Grid[y, x].Pieces.Count > 0)
                         {
-                            Console.Write(" P ");
+                            foreach (IPiece piece in board.Grid[y, x].Pieces)
+                            {
+                                // int indexOfPlayerPiece = players[0].PlayerPieces.FindIndex(p => p.Position.X == piece.Position.X && p.Position.Y == piece.Position.Y);
+                                Console.ForegroundColor = consoleColors[(int)piece.ColorState];
+                                Console.BackgroundColor = ConsoleColor.White;
+                                if (piece.Id == 1)
+                                {
+                                    Console.Write(" \u2460 ");
+                                }
+                                else if (piece.Id == 2)
+                                {
+                                    Console.Write(" \u2461 ");
+                                }
+                                else if (piece.Id == 3)
+                                {
+                                    Console.Write(" \u2462 ");
+                                }
+                                else
+                                {
+                                    Console.Write(" \u2463 ");
+                                }
+                                Console.ResetColor();
+
+                            }
                         }
                         else if (board.Grid[y, x].IsSafeZone)
                         {
@@ -582,6 +623,7 @@ public class GameController
     }
     public void AddPlayerPieceIntoBoard(IBoard board, List<IPlayer> players)
     {
+        SetupBoard(board);
         for (int y = 0; y <= 14; y++)
         {
             for (int x = 0; x <= 14; x++)
@@ -599,22 +641,8 @@ public class GameController
             }
         }
     }
-    public void MovePlayerPiece(IBoard board, IPlayer player, int step, int numberOfPiece)
+    public void MovePlayerPiece(IPlayer player, int step, int numberOfPiece)
     {
-        for (int y = 0; y <= 14; y++)
-        {
-            for (int x = 0; x <= 14; x++)
-            {
-                board.Grid[y, x].Pieces.RemoveAll(piece =>
-                piece.ColorState == player.PlayerPieces[numberOfPiece].ColorState &&
-                piece.Position.X == player.PlayerPieces[numberOfPiece].Position.X &&
-                piece.Position.Y == player.PlayerPieces[numberOfPiece].Position.Y &&
-                piece.PieceState == player.PlayerPieces[numberOfPiece].PieceState &&
-                piece.Id == player.PlayerPieces[numberOfPiece].Id
-                );
-            }
-        }
-
         int indexOfPiecePosition = player.PlayerPathPositions.FindIndex(position =>
                 position.X == player.PlayerPieces[numberOfPiece].Position.X &&
                 position.Y == player.PlayerPieces[numberOfPiece].Position.Y);
@@ -719,7 +747,6 @@ public class GameController
         }
 
     }
-
     public bool IsPlayerWinner(IPlayer player)
     {
         List<bool> allPieceInGoal = [];
@@ -735,5 +762,16 @@ public class GameController
     {
         int indexOfPiece = player.PlayerPieces.FindIndex(p => p.Id == piece.Id);
         player.PlayerPieces[indexOfPiece].Position = player.PlayerHomePositions[indexOfPiece];
+    }
+    public bool CheckCollision(IPiece piece, IBoard board)
+    {
+        if (board.Grid[piece.Position.Y, piece.Position.Y].Pieces.Count > 1)
+        {
+            if (!board.Grid[piece.Position.Y, piece.Position.Y].IsSafeZone)
+            {
+                
+            }
+        }
+        return false;
     }
 }

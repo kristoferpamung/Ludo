@@ -94,10 +94,11 @@ public class LudoModel
 
             if (hasPlayablePiece)
             {
-                Console.Write("Select a piece to move: ");
                 bool isValidPiece = false;
                 while (!isValidPiece)
                 {
+                    Console.Write("Select a piece to move: ");
+
                     string? isValidString = Console.ReadLine();
                     if (int.TryParse(isValidString, out int isValidInt))
                     {
@@ -120,14 +121,17 @@ public class LudoModel
 
                     }
                 }
-                gameController.MovePlayerPiece(board, currentPlayerTurn, (int)dice.DiceValue + 1, selectedPiece);
-                // gameController.AddPlayerPieceIntoBoard(board, players);
+                gameController.MovePlayerPiece(currentPlayerTurn, (int)dice.DiceValue + 1, selectedPiece);
+                gameController.AddPlayerPieceIntoBoard(board, players);
             }
-            Console.WriteLine("Press [Enter] to continue");
-            Console.ReadLine();
+            Thread.Sleep(2000);
             Console.ResetColor();
             Console.Clear();
-            currentPlayerTurn = gameController.NextTurn(currentPlayerTurn, players);
+
+            if (!(dice.DiceValue == DiceValue.ENAM))
+            {
+                currentPlayerTurn = gameController.NextTurn(currentPlayerTurn, players);
+            }
         }
     }
     void printInvalidInputMessage(string message)
