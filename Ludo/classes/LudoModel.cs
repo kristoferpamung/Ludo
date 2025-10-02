@@ -92,7 +92,7 @@ public class LudoModel
             }
 
             int selectedPiece = 0;
-
+            bool isPieceCollision = false;
             if (hasPlayablePiece)
             {
                 bool isValidPiece = false;
@@ -124,7 +124,7 @@ public class LudoModel
                 }
                 gameController.MovePlayerPiece(currentPlayerTurn, (int)dice.DiceValue + 1, selectedPiece);
                 gameController.AddPlayerPieceIntoBoard(board, players);
-                gameController.CheckCollision(currentPlayerTurn.PlayerPieces[selectedPiece], board, players);
+                isPieceCollision = gameController.CheckCollision(currentPlayerTurn.PlayerPieces[selectedPiece], board, players);
                 gameController.AddPlayerPieceIntoBoard(board, players);
             }
             if (gameController.CheckPlayerWinner(board, currentPlayerTurn))
@@ -140,7 +140,10 @@ public class LudoModel
                 Console.ResetColor();
                 Console.Clear();
 
-                if (!(dice.DiceValue == DiceValue.ENAM))
+                if (dice.DiceValue == DiceValue.ENAM || isPieceCollision)
+                {
+                }
+                else
                 {
                     currentPlayerTurn = gameController.NextTurn(currentPlayerTurn, players);
                 }
@@ -159,8 +162,8 @@ public class LudoModel
         Console.WriteLine("{0,-5} {1,-15} {2,-10}", "Winner", "Name", "Color");
         for (int i = 0; i < playerWinnerOrders.Count; i++)
         {
-            Console.Write("{0,-5} {1,-15}", $"{i + 1}.", players[i].Name);
-            Console.BackgroundColor = consoleColors[(int)players[i].ColorState];
+            Console.Write("{0,-5} {1,-15}", $"{i + 1}.", playerWinnerOrders[i].Name);
+            Console.BackgroundColor = consoleColors[(int)playerWinnerOrders[i].ColorState];
             Console.Write("{0,-10}", "  ");
             Console.ResetColor();
             Console.WriteLine();
